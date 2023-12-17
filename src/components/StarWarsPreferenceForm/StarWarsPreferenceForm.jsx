@@ -1,40 +1,37 @@
-import React, { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import classes from './styles.module.css';
 import { InputField } from '../InputField';
 import { Select } from '../Select';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useQuery } from '@apollo/client';
-import { userMoviePreferenceSchema } from '../../utils/validations/starWarsPreferenceForm';
-import { ALL_FILMS } from '../../gql/queries/starWars';
+import { useStarWarsPreferenceForm } from './useStarWarsPreferenceForm';
+import classes from './styles.module.css';
 
 export const StarWarsPreferenceForm = () => {
   const {
+    isFormSubmitted,
+    fetchMoviesError,
+    loadingMovies,
+    movieOptions,
+    validationErrors,
     register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    resolver: joiResolver(userMoviePreferenceSchema),
-  });
+    handleFormSubmit,
+  } = useStarWarsPreferenceForm();
 
-  const { data, error } = useQuery(ALL_FILMS);
-  const movieOptions = useMemo(
-    () => data?.allFilms.films.map(({ title, id }) => ({ value: id, title })),
-    [data?.allFilms.films]
-  );
+  if (isFormSubmitted)
+    return <p style={{ margin: 'auto' }}>Thanks for submitting the form!</p>;
 
-  const onSubmit = (data) => console.log('Submitted Data', data);
-  if (error)
+  if (loadingMovies) return <></>;
+
+  if (fetchMoviesError) {
     return (
       <h2 style={{ color: 'red' }}>
         Unable to fetch movies. Check your connection!
       </h2>
     );
+  }
+
   return (
-    <form className={classes.formContainer} onSubmit={handleSubmit(onSubmit)}>
+    <form className={classes.formContainer} onSubmit={handleFormSubmit}>
       <div>
-        {errors &&
-          Object.values(errors).map((error) => (
+        {validationErrors &&
+          Object.values(validationErrors).map((error) => (
             <p key={error.message} className={classes.formValidationError}>
               {error.message}
             </p>
