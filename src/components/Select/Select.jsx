@@ -5,7 +5,7 @@ export const Select = React.forwardRef(
   ({ name, label, required, options, ...props }, ref) => {
     return (
       <div className={classes.container}>
-        <label className={classes.label} for={name}>{`${label}${
+        <label className={classes.label} htmlFor={name}>{`${label}${
           required ? ' *' : ''
         }`}</label>
         <select
