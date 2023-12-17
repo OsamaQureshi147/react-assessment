@@ -6,7 +6,7 @@ import { userMoviePreferenceSchema } from '../../utils/validations/starWarsPrefe
 import { ALL_FILMS } from '../../gql/queries/starWars';
 
 export const useStarWarsPreferenceForm = () => {
-  const [isFormSubmitted, setIsFormSubmitted] = useState(true);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const {
     register,
     formState: { errors },
