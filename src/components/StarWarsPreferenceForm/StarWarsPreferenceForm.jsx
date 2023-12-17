@@ -13,14 +13,15 @@ export const StarWarsPreferenceForm = () => {
         <p className={classes.formValidationError}>
           You need to enter a last name.
         </p>
-        <InputField name='firstName' label='first name' required />
-        <InputField name='lastName' label='last name' required />
-        <Select
-          name='movie'
-          label='Favorite Star Wars movie'
-          options={[{ value: 'dummyMovie', title: 'Dummy Movie' }]}
-          required
-        />
+        <div className={classes.gridContainer}>
+          <InputField name='firstName' label='first name' required />
+          <InputField name='lastName' label='last name' required />
+          <Select
+            name='movie'
+            label='Favorite Star Wars movie'
+            options={[{ value: 'dummyMovie', title: 'Dummy Movie' }]}
+          />
+        </div>
       </div>
       <button className={classes.submitButton} type='submit'>
         Submit
